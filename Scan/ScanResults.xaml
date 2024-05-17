@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BluetoothCourse.Scan.ScanResults">
+    <StackLayout>
+
+        <Label Text="Scan Devices" FontSize="20"/>
+
+        <ListView x:Name="lvDevices"
+            ItemsSource="{Binding Results}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                Text="{Binding Peripheral.Uuid}"
+                                FontAttributes="Bold"/>
+                            <Label Grid.Column="1" 
+                                Text="{Binding Peripheral.Name}"
+                                FontAttributes="Bold" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button x:Name="btnConectar" Text="Conectar" FontSize="20" HorizontalOptions="CenterAndExpand" Clicked="btnConectar_Clicked"/>
+    </StackLayout>
+</ContentPage>
