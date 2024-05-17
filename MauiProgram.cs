@@ -19,7 +19,8 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddShiny();
-		builder.Services.AddDependencies();
+		builder.Services.AddBluetooth();
+		builder.Services.AddViews();
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -34,7 +35,12 @@ public static class MauiProgram
 		services.AddBluetoothLE();
 	}
 
-	private static void AddDependencies(this IServiceCollection services)
+	private static void AddBluetooth(this IServiceCollection services)
+	{
+		services.AddSingleton<Bluetooth.BluetoothScanner>();
+        services.AddSingleton<Bluetooth.BluetoothPermissions>();
+    }
+	private static void AddViews(this IServiceCollection services)
 	{
 		services.AddSingleton<BluetoothCourse.Scan.ScanResults>();
 	}

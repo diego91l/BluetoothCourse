@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Shiny.BluetoothLE;
 
 namespace BluetoothCourse.Bluetooth
@@ -6,11 +7,26 @@ namespace BluetoothCourse.Bluetooth
     public class BluetoothDevice
     {
         public IPeripheral _device;
-        public List<BleCharacteristicInfo> _characteristics = new List<BleCharacteristicInfo>();
+        public ObservableCollection<BleCharacteristicInfo> Characteristics = new ObservableCollection<BleCharacteristicInfo>();
 
+        public string Name { get; private set; } = "Unknown";
+
+        public int Rssi { get; private set; } = 0;  
+
+        public string Uuid { get; private set; } = string.Empty;
         public BluetoothDevice(IPeripheral device)
         {
             _device = device;
+            Name = _device != null ? _device.Name : "Unknown";
+            Uuid = _device != null ? _device.Uuid.ToString() : string.Empty;
+        }
+
+        public BluetoothDevice(ScanResult scanResult)
+        {
+            _device = scanResult.Peripheral;
+            Name = _device != null ? _device.Name : "Unknown";
+            Uuid = _device != null ? _device.Uuid.ToString() : string.Empty;
+            Rssi = scanResult.Rssi;
         }
 
         public async void Connect()
@@ -32,20 +48,20 @@ namespace BluetoothCourse.Bluetooth
 
                 foreach (var characteristic in characteristics)
                 {
-                    _characteristics.Add(characteristic);
+                    Characteristics.Add(characteristic);
                 }
             }
         }
 
         public void Disconnect()
         {
-            _characteristics.Clear();
+            Characteristics.Clear();
             _device.CancelConnection();
         }
 
         public async Task<byte[]> Read(Guid characteristicUuid)
         {
-            var characteristic = _characteristics.First(a => a.Uuid == characteristicUuid.ToString());
+            var characteristic = Characteristics.First(a => a.Uuid == characteristicUuid.ToString());
 
             if (!characteristic.CanRead())
             {
@@ -58,7 +74,7 @@ namespace BluetoothCourse.Bluetooth
 
         public async Task<bool> Write(Guid characteristicUuid, byte[] data)
         {
-            var characteristic = _characteristics.First(a => a.Uuid == characteristicUuid.ToString());
+            var characteristic = Characteristics.First(a => a.Uuid == characteristicUuid.ToString());
 
             if (!(characteristic.CanWrite() || characteristic.CanWriteWithoutResponse()))
             {

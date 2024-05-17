@@ -3,18 +3,18 @@ using Shiny;
 using Shiny.BluetoothLE;
 using System.Collections;
 using BluetoothCourse.Extensions;
+using BluetoothCourse.Bluetooth;
 
 namespace BluetoothCourse.Scan;
 
 public partial class ScanResults : ContentPage
 {
-    private readonly IBleManager _bleManager;
+    private readonly BluetoothScanner _bluetoothScanner;
 
-    public ObservableList<ScanResult> Results { get; } = new ObservableList<ScanResult>();
-
-    public ScanResults(IBleManager bleManager)
+    public ScanResults(BluetoothScanner bluetoothScanner)
     {
-        _bleManager = bleManager;
+        _bluetoothScanner = bluetoothScanner;
+
         InitializeComponent();
         this.BindingContext = this;
     }
@@ -23,33 +23,15 @@ public partial class ScanResults : ContentPage
     {
         base.OnAppearing();
 
-        try { Scan(); }
-        catch { }
+        lvDevices.ItemsSource = _bluetoothScanner.Devices;
+        _bluetoothScanner.StartScanning();
 
         lvDevices.ItemSelected += (s, e) => {
             lvDevices.SelectedItem = null;
         };
     }
 
-    public void Scan()
-    {
-        if (!_bleManager.IsScanning)
-        {
-            _bleManager.StopScan();
-        }
 
-        Results.Clear();
-
-        _bleManager.Scan()
-            .Subscribe(_result => {
-                System.Diagnostics.Debug.WriteLine($"Scanned for: {_result.Peripheral.Uuid.ToString()}");
-
-                if (!Results.Any(a => a.Peripheral.Uuid.Equals(_result.Peripheral.Uuid)))
-                {
-                    Results.Add(_result);
-                }
-            });
-    }
 
     private void btnConectar_Clicked(object sender, EventArgs e)
     {

@@ -6,8 +6,7 @@
 
         <Label Text="Scan Devices" FontSize="20"/>
 
-        <ListView x:Name="lvDevices"
-            ItemsSource="{Binding Results}">
+        <ListView x:Name="lvDevices">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -20,10 +19,10 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"
-                                Text="{Binding Peripheral.Uuid}"
+                                Text="{Binding Name}"
                                 FontAttributes="Bold"/>
                             <Label Grid.Column="1" 
-                                Text="{Binding Peripheral.Name}"
+                                Text="{Binding Uuid}"
                                 FontAttributes="Bold" />
                         </Grid>
                     </ViewCell>
