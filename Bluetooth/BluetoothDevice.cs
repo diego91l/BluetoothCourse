@@ -14,6 +14,8 @@ namespace BluetoothCourse.Bluetooth
         public int Rssi { get; private set; } = 0;  
 
         public string Uuid { get; private set; } = string.Empty;
+
+        public string DisplayName => $"{Name} ({Uuid})";
         public BluetoothDevice(IPeripheral device)
         {
             _device = device;

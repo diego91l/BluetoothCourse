@@ -10,6 +10,7 @@ namespace BluetoothCourse.Scan;
 public partial class ScanResults : ContentPage
 {
     private readonly BluetoothScanner _bluetoothScanner;
+    private BluetoothDevice _selectedDevice;
 
     public ScanResults(BluetoothScanner bluetoothScanner)
     {
@@ -23,11 +24,15 @@ public partial class ScanResults : ContentPage
     {
         base.OnAppearing();
 
-        lvDevices.ItemsSource = _bluetoothScanner.Devices;
+        pickerDevices.ItemsSource = _bluetoothScanner.Devices;
         _bluetoothScanner.StartScanning();
 
-        lvDevices.ItemSelected += (s, e) => {
-            lvDevices.SelectedItem = null;
+        pickerDevices.SelectedIndexChanged += (s, e) =>
+        {
+            if (pickerDevices.SelectedIndex != -1)
+            {
+                _selectedDevice = (BluetoothDevice)pickerDevices.SelectedItem;
+            }
         };
     }
 
@@ -35,6 +40,29 @@ public partial class ScanResults : ContentPage
 
     private void btnConectar_Clicked(object sender, EventArgs e)
     {
+        if (_selectedDevice != null)
+        {
+            _selectedDevice.Connect();
+            DisplayAlert("Connection", $"Connecting to {_selectedDevice.Name}", "OK");
+        }
+        else
+        {
+            DisplayAlert("Error", "Please select a device to connect", "OK");
+        }
+
+    }
+
+    private void btnDesconectar_Clicked(object sender, EventArgs e)
+    {
+        if (_selectedDevice != null)
+        {
+            _selectedDevice.Disconnect();
+            DisplayAlert("Disconnection", $"Disconnected from {_selectedDevice.Name}", "OK");
+        }
+        else
+        {
+            DisplayAlert("Error", "Please select a device to disconnect", "OK");
+        }
 
     }
 }

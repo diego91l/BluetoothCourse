@@ -2,34 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BluetoothCourse.Scan.ScanResults">
-    <StackLayout>
+    <StackLayout Padding="20">
 
-        <Label Text="Scan Devices" FontSize="20"/>
+        <Label Text="Scan Devices" FontSize="20" Margin="0,0,0,10"/>
 
-        <ListView x:Name="lvDevices">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0"
-                                Text="{Binding Name}"
-                                FontAttributes="Bold"/>
-                            <Label Grid.Column="1" 
-                                Text="{Binding Uuid}"
-                                FontAttributes="Bold" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Picker x:Name="pickerDevices" Title="Select a device" ItemDisplayBinding="{Binding DisplayName}" />
 
-        <Button x:Name="btnConectar" Text="Conectar" FontSize="20" HorizontalOptions="CenterAndExpand" Clicked="btnConectar_Clicked"/>
+        <Button x:Name="btnConectar" Text="Connect" FontSize="20" HorizontalOptions="CenterAndExpand" Clicked="btnConectar_Clicked" Margin="0,10,0,0"/>
+
+        <Button x:Name="btnDesconectar" Text="Disconnect" FontSize="20" HorizontalOptions="CenterAndExpand" Clicked="btnDesconectar_Clicked" Margin="0,10,0,0"/>
+
+        <Image Source="logbluetoothandarduino.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="200"/>
+
     </StackLayout>
 </ContentPage>
