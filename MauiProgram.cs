@@ -43,5 +43,6 @@ public static class MauiProgram
 	private static void AddViews(this IServiceCollection services)
 	{
 		services.AddSingleton<BluetoothCourse.Scan.ScanResults>();
-	}
+        services.AddTransient<BluetoothCourse.Views.Loggin.Loggin>();
+    }
 }

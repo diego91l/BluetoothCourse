@@ -54,4 +54,10 @@
 		<PackageReference Include="Shiny.BluetoothLE" Version="3.2.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\Loggin\Loggin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

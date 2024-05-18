@@ -3,13 +3,10 @@
     x:Class="BluetoothCourse.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:BluetoothCourse"
-    xmlns:scan="clr-namespace:BluetoothCourse.Scan"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:scan="clr-namespace:BluetoothCourse"
+    Shell.FlyoutBehavior="Disabled"
+        Title="BluetoothCourse">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate scan:ScanResults}"
-        Route="MainPage" />
+
 
 </Shell>
